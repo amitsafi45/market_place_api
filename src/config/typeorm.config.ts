@@ -15,8 +15,9 @@ export const typeOrmConfig = (
  entities: [
     join(__dirname, '..', 'entity', '**', '*.entity.{ts,js}'), // Handles both .ts and .js files in all subdirectories
   ],
+  migrations: [join(__dirname, '..','migration/*{.ts,.js}')],
   
-  synchronize: configService.get<boolean>('DB_SYNCHRONIZE',true),
+  synchronize: configService.get<boolean>('DB_SYNCHRONIZE',false),
   logging: configService.get<boolean>(
     'DB_LOGGING',
     configService.get('ENVIRONMENT') === Environment.Development ? true : false,

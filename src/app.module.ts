@@ -8,6 +8,9 @@ import { envValidate } from '@utils/envValidator';
 import { LoggingMiddleware } from '@middleware/logging.middleware';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
+import { UserModule } from './module/user.module';
+import { ProductModule } from './module/product.module';
+import { OrderModule } from './module/order.module';
 
 @Module({
   imports: [ 
@@ -34,6 +37,9 @@ import { APP_GUARD } from '@nestjs/core';
         },
       ],
     }),
+     UserModule,
+    ProductModule,
+    OrderModule,
   ],
   controllers: [AppController],
   providers: [AppService, {

@@ -1,4 +1,4 @@
-import { Controller, Post } from "@nestjs/common";
+import { Controller, Get, Post } from "@nestjs/common";
 
 @Controller('/users')
 export class UserController{
@@ -6,4 +6,15 @@ export class UserController{
      async  register() {
       
      }
+
+     @Post('/login')
+     async login(){
+
+     }
+
+     @Get('/product/list')
+     async listOfProduct(){
+
+     }
+     
 }

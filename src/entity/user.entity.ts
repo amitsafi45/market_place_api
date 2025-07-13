@@ -7,6 +7,7 @@ import {
 } from 'typeorm';
 import { BaseEntity } from '@entity/base.entity';
 import { UserRole } from '@/constant/enum';
+import {  ProductEntity } from './product.entity';
 
 
 @Entity('user')
@@ -28,4 +29,7 @@ export class UserEntity extends BaseEntity {
   
     @Column({ type: 'enum', enum:UserRole })
   role:UserRole;
+
+  @OneToMany(() => ProductEntity, product => product.seller)
+  products: ProductEntity[];
 }

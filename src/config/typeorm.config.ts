@@ -12,9 +12,8 @@ export const typeOrmConfig = (
   username: configService.get<string>('DB_USERNAME'),
   password: configService.get<string>('DB_PASSWORD'),
   database: configService.get<string>('DB_DATABASE'),
- 
-  entities: [
-    join(__dirname, '..', 'entity', '*.entity.{ts,js}'), // Handles both .ts and .js files in all subdirectories
+ entities: [
+    join(__dirname, '..', 'entity', '**', '*.entity.{ts,js}'), // Handles both .ts and .js files in all subdirectories
   ],
   
   synchronize: configService.get<boolean>('DB_SYNCHRONIZE',true),

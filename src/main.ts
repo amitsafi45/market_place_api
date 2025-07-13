@@ -5,7 +5,8 @@ import { ValidationPipe } from '@nestjs/common';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix('market-place/api/v1');
-   app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe());
+  
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();

@@ -16,6 +16,20 @@
     "forceConsistentCasingInFileNames": true,
     "noImplicitAny": false,
     "strictBindCallApply": false,
-    "noFallthroughCasesInSwitch": false
-  }
+    "noFallthroughCasesInSwitch": false,
+      "paths": {
+      "@/*":["src/*"],
+      "@module/*": ["src/module/*"],
+      "@dto/*": ["src/dto/*"],
+      "@utils/*": ["src/utils/*"],
+      "@config/*":["src/config/*"],
+      "@controller/*": ["src/controller/*"],
+      "@service/*": ["src/service/*"],
+      "@constant/*": ["src/constant/*"],
+      "@entity/*":["src/entity/*"],
+      
+    },
+  },
+
+    "include": ["src/**/*.ts"],
 }

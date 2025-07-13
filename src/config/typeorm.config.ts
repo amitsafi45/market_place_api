@@ -2,7 +2,7 @@ import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { ConfigService } from '@nestjs/config';
 import { DataSourceOptions } from 'typeorm';
 import { join } from 'path';
-import { Environment } from '../constants/enum';
+import { Environment } from '@constant/enum';
 export const typeOrmConfig = (
   configService: ConfigService,
 ): TypeOrmModuleOptions & DataSourceOptions => ({

@@ -2,6 +2,7 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from "typeorm";
 import { BaseEntity } from "./base.entity";
 import { UserEntity } from "./user.entity";
 import { OrderItemEntity } from "./orderItem.entity";
+import { OrderStatus } from "@/constant/enum";
 
 @Entity()
 export class OrderEntity extends BaseEntity {
@@ -15,5 +16,12 @@ export class OrderEntity extends BaseEntity {
 
   @Column('decimal')
   totalPrice: number;
+
+   @Column({
+    type: 'enum',
+    enum: OrderStatus,
+    default: OrderStatus.PENDING,
+  })
+  status: OrderStatus;
 
 }

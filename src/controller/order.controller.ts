@@ -1,10 +1,12 @@
-import { Controller, Get, Post, Param } from "@nestjs/common";
+import { CreateOrderDTO } from "@/dto/order.dto";
+import { Controller, Get, Post, Param, Body } from "@nestjs/common";
 
 @Controller('/orders')
 export class OrderController {
 
   @Post('')
-  async createOrder() {
+  async createOrder(@Body()data:CreateOrderDTO) {
+    
   }
 
   @Get('/')

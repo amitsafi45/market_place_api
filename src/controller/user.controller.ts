@@ -1,32 +1,14 @@
 import { Controller, Get, Post, Param } from "@nestjs/common";
 
-@Controller()
+@Controller('/users')
 export class UserController {
-  @Post('/users/register')
+  @Post('/register')
   async register() {
   }
 
-  @Post('/users/login')
+  @Post('/login')
   async login() {
   }
 
-  @Get('/products')
-  async listOfProduct() {
-  }
-
-  @Get('/products/:productId')
-  async productDetail(@Param('productId') productId: string) {
-  }
-
-  @Post('/orders')
-  async createOrder() {
-  }
-
-  @Get('/orders')
-  async orderList() {
-  }
-
-  @Get('/orders/:orderId')
-  async orderDetail(@Param('orderId') orderId: string) {
-  }
+  
 }

@@ -28,7 +28,7 @@ export class UserEntity extends BaseEntity {
   }) 
   password: string;
   
-    @Column({ type: 'enum', enum:UserRole })
+  @Column({ type: 'enum', enum:UserRole })
   role:UserRole;
 
   @OneToMany(() => ProductEntity, product => product.seller)

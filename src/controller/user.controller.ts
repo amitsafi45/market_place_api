@@ -18,8 +18,7 @@ export class UserController {
         message: 'Account with this email already exists.',
       };
     }
-     const hashedPassword = await bcrypt.hash(data.password, 10);
-     data.password=hashedPassword
+     data.password=await bcrypt.hash(data.password, 10);
     await this.userService.createUser(data)
     return {
       success:true,
@@ -30,6 +29,7 @@ export class UserController {
 
   @Post('/login')
   async login() {
+
   }
 
   

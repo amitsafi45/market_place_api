@@ -1,10 +1,9 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, UpdateDateColumn, OneToMany, JoinColumn } from 'typeorm';
-import { UserEntity } from './user.entity';
+import { UserEntity } from '@entity/user.entity';
+import { BaseEntity } from '@entity/base.entity';
 
 @Entity()
-export class ProductEntity {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+export class ProductEntity extends BaseEntity {
 
   @Column()
   name: string;
@@ -19,10 +18,4 @@ export class ProductEntity {
   @JoinColumn({name:'seller_id'})
   seller: UserEntity;
 
- 
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
 }

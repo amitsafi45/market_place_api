@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Param } from "@nestjs/common";
 
 @Controller('/orders')
-export class ProductController {
+export class OrderController {
 
   @Post('')
   async createOrder() {

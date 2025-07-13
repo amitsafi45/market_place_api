@@ -3,7 +3,7 @@ export enum Environment {
   Production = 'Production',
 }
 
-export enum Role{
+export enum UserRole{
   'Buyer'= 'Buyer' ,
-  'Seller'='Buyer'
+  'Seller'='Seller'
 }

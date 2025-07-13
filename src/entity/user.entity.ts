@@ -6,6 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { BaseEntity } from '@entity/base.entity';
+import { UserRole } from '@/constant/enum';
 
 
 @Entity('user')
@@ -25,5 +26,6 @@ export class UserEntity extends BaseEntity {
   }) 
   password: string;
   
-  
+    @Column({ type: 'enum', enum:UserRole })
+  role:UserRole;
 }

@@ -1,4 +1,4 @@
-import { UserRegisterDTO } from "@/dto/user.dto";
+import { LoginDTO, UserRegisterDTO } from "@/dto/user.dto";
 import { UserService } from "@/service/user.service";
 import * as bcrypt from 'bcrypt';
 import { Controller, Get, Post, Param, Body, HttpStatus } from "@nestjs/common";
@@ -28,8 +28,31 @@ export class UserController {
   }
 
   @Post('/login')
-  async login() {
-
+  async login(@Body()data:LoginDTO) {
+     const checkIsUserExist=await this.userService.getUserByEmail(data.email)
+    if(!checkIsUserExist){
+      return {
+        success: false,
+        statusCode: HttpStatus.BAD_REQUEST,
+        message: 'Invalid Email Or Password',
+      };
+    }
+     const isPasswordMatch = await bcrypt.compare(data.password, checkIsUserExist.password); 
+      if(!isPasswordMatch){
+      return {
+        success: false,
+        statusCode: HttpStatus.BAD_REQUEST,
+        message: 'Invalid Email Or Password',
+      };
+    }
+    return {
+      success:true,
+      statusCode:HttpStatus.ACCEPTED,
+      message:"Login Successfully",
+      data:{
+        ...checkIsUserExist
+      }
+    }
   }
 
   

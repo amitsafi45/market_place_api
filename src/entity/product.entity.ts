@@ -19,7 +19,7 @@ export class ProductEntity extends BaseEntity {
 
   @ManyToOne(() => UserEntity, (user) => user.products, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'seller_id' })
-  seller: UserEntity;
+  seller: UserEntity| string;
 
   @OneToMany(() => OrderItemEntity, (orderItem) => orderItem.product)
   orderItems: OrderItemEntity[];

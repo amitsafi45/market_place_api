@@ -14,7 +14,7 @@ constructor(private readonly jwtService:JwtService,private readonly configServic
   ): boolean | Promise<boolean> | Observable<boolean> {
     try{
      const request = context.switchToHttp().getRequest();
-     const token=request.headers.authorization.split(' ')[1];
+     const token=request.headers?.authorization?.split(' ')[1];
      if(!token){
       throw new HttpException({success:false,statusCode:HttpStatus.UNAUTHORIZED,message:"Token missing"},HttpStatus.UNAUTHORIZED)
      }

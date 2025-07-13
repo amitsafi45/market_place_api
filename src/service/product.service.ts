@@ -12,9 +12,9 @@ export class ProductService{
          private readonly productRepository: Repository<ProductEntity>,
        ) {}
 
-       async createProduct(data:CreateProductDTO,seller:UserEntity){
+       async createProduct(data:CreateProductDTO,sellerId:string){
            await this.productRepository.insert({
-            seller:seller,...data
+            seller:sellerId,...data
           })
        }
 

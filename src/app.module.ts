@@ -1,10 +1,11 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { AppController } from '@controller/app.controller';
 import { AppService } from '@service/app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeOrmConfig } from '@config/typeorm.config';
 import { envValidate } from '@utils/envValidator';
+import { LoggingMiddleware } from '@middleware/logging.middleware';
 
 @Module({
   imports: [ ConfigModule.forRoot({
@@ -20,4 +21,8 @@ import { envValidate } from '@utils/envValidator';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoggingMiddleware).forRoutes('*'); // Apply middleware globally or to specific routes
+  }
+}

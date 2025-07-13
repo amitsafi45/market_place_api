@@ -24,6 +24,7 @@
       "@utils/*": ["src/utils/*"],
       "@config/*":["src/config/*"],
       "@controller/*": ["src/controller/*"],
+      "@middleware/*": ["src/middleware/*"],
       "@service/*": ["src/service/*"],
       "@constant/*": ["src/constant/*"],
       "@entity/*":["src/entity/*"],

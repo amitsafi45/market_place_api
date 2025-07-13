@@ -1,6 +1,7 @@
-import { CreateProductDTO } from "@/dto/product.dto";
+import { CreateProductDTO, ProductQueryDTO } from "@/dto/product.dto";
 import { ProductEntity } from "@/entity/product.entity";
 import { UserEntity } from "@/entity/user.entity";
+import { buildPaginationMeta } from "@/utils/paginate";
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
@@ -28,5 +29,39 @@ export class ProductService{
             }
          }) 
        }
+
+  async findAllProducts(query:ProductQueryDTO) {
+    const { page, limit, minPrice, maxPrice, sellerId } = query;
+
+    const qb = this.productRepository.createQueryBuilder('product');
+
+    if (minPrice) {
+      qb.andWhere('product.price >= :minPrice', { minPrice });
+    }
+
+    if (maxPrice) {
+      qb.andWhere('product.price <= :maxPrice', { maxPrice });
+    }
+
+    if (sellerId) {
+      qb.andWhere('product.seller = :sellerId', { sellerId });
+    }
+    const parsePage=parseInt(page,10)
+    const parseLimit=parseInt(limit,10)
+    
+    qb.skip((parsePage - 1) * parseLimit).take(parseLimit);
+
+    const [items, total] = await qb.getManyAndCount();
+
+return {
+  success: true,
+  statusCode: 200,
+  message: 'Products fetched successfully',
+  meta: buildPaginationMeta(total, parsePage, parseLimit),
+  items,
+};
+
+   
+  }
 
 }

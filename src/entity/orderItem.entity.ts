@@ -1,11 +1,10 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { OrderEntity } from "@entity/order.entity";
 import { ProductEntity } from "@entity/product.entity";
+import { BaseEntity } from "./base.entity";
 
 @Entity()
-export class OrderItemEntity {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+export class OrderItemEntity extends BaseEntity{
 
   @ManyToOne(() => OrderEntity, (order) => order.items, { onDelete: 'CASCADE' })
   @JoinColumn({name:'order_id'})

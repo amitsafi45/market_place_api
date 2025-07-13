@@ -6,9 +6,9 @@ import { AppService } from '@service/app.service';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get()
-  getHello(): {success:boolean,message:string} {
-    const response= this.appService.getHello();
+  @Get('/ping')
+  getping(): {success:boolean,message:string} {
+    const response= this.appService.getPing();
     
     return response
   }

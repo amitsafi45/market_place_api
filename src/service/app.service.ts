@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class AppService {
-  getHello(): {success:boolean,message:string} {
+  getPing(): {success:boolean,message:string} {
     return {
       success:true,
       message:"Welcome to market place api"

@@ -1,10 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, UpdateDateColumn, OneToMany, JoinColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
 import { UserEntity } from '@entity/user.entity';
 import { BaseEntity } from '@entity/base.entity';
+import { OrderItemEntity } from '@entity/orderItem.entity';
 
 @Entity()
 export class ProductEntity extends BaseEntity {
-
   @Column()
   name: string;
 
@@ -14,8 +14,10 @@ export class ProductEntity extends BaseEntity {
   @Column('int')
   stock: number;
 
-  @ManyToOne(() => UserEntity, user => user.products, { onDelete: 'CASCADE' })
-  @JoinColumn({name:'seller_id'})
+  @ManyToOne(() => UserEntity, (user) => user.products, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'seller_id' })
   seller: UserEntity;
 
+  @OneToMany(() => OrderItemEntity, (orderItem) => orderItem.product)
+  orderItems: OrderItemEntity[];
 }

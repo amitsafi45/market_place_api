@@ -8,6 +8,7 @@ import {
 import { BaseEntity } from '@entity/base.entity';
 import { UserRole } from '@/constant/enum';
 import {  ProductEntity } from './product.entity';
+import { OrderEntity } from './order.entity';
 
 
 @Entity('user')
@@ -32,4 +33,7 @@ export class UserEntity extends BaseEntity {
 
   @OneToMany(() => ProductEntity, product => product.seller)
   products: ProductEntity[];
+
+  @OneToMany(() => OrderEntity, order => order.buyer)
+  orders: OrderEntity[];
 }

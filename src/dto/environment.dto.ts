@@ -19,26 +19,7 @@ export class EnvironmentVariablesDTO {
   @IsNotEmpty()
   @IsString()
   @Length(32, 256) // Assuming secret keys have a minimum length of 32 characters
-  REFRESH_SECRET_KEY: string;
-
-  @IsNotEmpty()
-  @IsString()
-  @Length(32, 256) // Assuming secret keys have a minimum length of 32 characters
-  ACCESS_SECRET_KEY: string;
-
-  @IsNotEmpty()
-  @Matches(/^\d+[smhd]$/, {
-    message:
-      'REFRESH_TOKEN_EXPIRES_IN must be a valid duration like "60s", "15m", "1h", or "2d"',
-  })
-  REFRESH_TOKEN_EXPIRES_IN: string;
-
-  @IsNotEmpty()
-  @Matches(/^\d+[smhd]$/, {
-    message:
-      'ACCESS_TOKEN_EXPIRES_IN must be a valid duration like "60s", "15m", "1h", or "2d"',
-  })
-  ACCESS_TOKEN_EXPIRES_IN: string;
+  JWT_SECRET:string
 
   @IsNotEmpty()
   @IsEnum(Environment)

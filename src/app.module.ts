@@ -12,6 +12,7 @@ import { UserModule } from './module/user.module';
 import { ProductModule } from './module/product.module';
 import { OrderModule } from './module/order.module';
 
+import { JwtModule } from '@nestjs/jwt';
 @Module({
   imports: [ 
     
@@ -20,6 +21,16 @@ import { OrderModule } from './module/order.module';
       ignoreEnvFile: false,
       isGlobal: true,
       validate: envValidate,
+    }),
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      useFactory: async (config: ConfigService) => ({
+        secret: config.get('JWT_SECRET'),
+        signOptions: {
+          expiresIn: config.get('JWT_EXPIRES_IN'),
+        },
+      }),
+      inject: [ConfigService],
     }),
   
     TypeOrmModule.forRootAsync({
@@ -42,7 +53,7 @@ import { OrderModule } from './module/order.module';
     OrderModule,
   ],
   controllers: [AppController],
-  providers: [AppService, {
+  providers: [JwtModule,AppService, {
   provide: APP_GUARD,
   useClass: ThrottlerGuard
 },],

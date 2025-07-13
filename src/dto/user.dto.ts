@@ -7,9 +7,9 @@ import {
 } from 'class-validator';
 
 export class UserRegisterDTO {
+  @IsNotEmpty({ message: 'Name is required'})
   @IsString()
-  @IsNotEmpty({ message: 'Name is required' })
-  @Length(2, 150, { message: 'Name must be between 2 and 150 characters' })
+  // @Length(2, 150, { message: 'Name must be between 2 and 150 characters' })
   name: string;
 
   @IsEmail({}, { message: 'Invalid email format' })

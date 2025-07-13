@@ -6,20 +6,40 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeOrmConfig } from '@config/typeorm.config';
 import { envValidate } from '@utils/envValidator';
 import { LoggingMiddleware } from '@middleware/logging.middleware';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
-  imports: [ ConfigModule.forRoot({
+  imports: [ 
+    
+    ConfigModule.forRoot({
       envFilePath: '.env',
       ignoreEnvFile: false,
       isGlobal: true,
       validate: envValidate,
-    }),TypeOrmModule.forRootAsync({
+    }),
+  
+    TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: typeOrmConfig,
       inject: [ConfigService],
-    })],
+      }),
+     ThrottlerModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => [
+        {
+          ttl: parseInt(config.get('THROTTLE_TTL', '3600')),
+         limit: parseInt(config.get('THROTTLE_LIMIT', '100')),
+        },
+      ],
+    }),
+  ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, {
+  provide: APP_GUARD,
+  useClass: ThrottlerGuard
+},],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {

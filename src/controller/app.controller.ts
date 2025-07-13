@@ -1,4 +1,5 @@
 import { Controller, Get, HttpCode } from '@nestjs/common';
+import { Throttle } from '@nestjs/throttler';
 import { AppService } from '@service/app.service';
 
 @Controller()

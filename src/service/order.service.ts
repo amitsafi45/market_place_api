@@ -10,8 +10,11 @@ export class OrderService{
             @InjectRepository(OrderEntity)
             private readonly orderRepository: Repository<OrderEntity>,
          ){}
+
+
+         
    async createOrder(buyerId:string,totalPrice:number,transaction: EntityManager){
-         return  transaction.getRepository(OrderEntity).create({
+         return  transaction.getRepository(OrderEntity).insert({
              buyer:buyerId,
              totalPrice:totalPrice
          }) 

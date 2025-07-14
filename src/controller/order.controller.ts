@@ -37,7 +37,9 @@ export class OrderController {
         });
         total += product.price * item.quantity
 
+
       }
+      const saveOrder=await this.orderService.createOrder(buyerId,total,transcation)
       
       return total
     } catch (error) {

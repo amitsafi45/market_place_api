@@ -34,7 +34,6 @@ export class ProductController {
         const isProductExist=await this.productService.findProductByNameForSeller(data.name,userId)
          if(isProductExist){
             throw new BadRequestException("Product already exists");
-         
          }
          await this.productService.createProduct(data,userId)
          return{

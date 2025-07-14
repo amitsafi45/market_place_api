@@ -4,7 +4,7 @@ import { UserEntity } from "./user.entity";
 import { OrderItemEntity } from "./orderItem.entity";
 import { OrderStatus } from "@/constant/enum";
 
-@Entity()
+@Entity('order')
 export class OrderEntity extends BaseEntity {
 
   @ManyToOne(() => UserEntity, (user) => user.orders)

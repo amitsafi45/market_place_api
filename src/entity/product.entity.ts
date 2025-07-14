@@ -3,7 +3,7 @@ import { UserEntity } from '@entity/user.entity';
 import { BaseEntity } from '@entity/base.entity';
 import { OrderItemEntity } from '@entity/orderItem.entity';
 
-@Entity()
+@Entity('product')
 export class ProductEntity extends BaseEntity {
   @Column()
   name: string;

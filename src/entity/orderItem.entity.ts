@@ -3,7 +3,7 @@ import { OrderEntity } from "@entity/order.entity";
 import { ProductEntity } from "@entity/product.entity";
 import { BaseEntity } from "./base.entity";
 
-@Entity()
+@Entity('order_item')
 export class OrderItemEntity extends BaseEntity{
 
   @ManyToOne(() => OrderEntity, (order) => order.items, { onDelete: 'CASCADE' })
@@ -17,6 +17,6 @@ export class OrderItemEntity extends BaseEntity{
   @Column('int')
   quantity: number;
 
-  @Column('decimal')
+  @Column('decimal',{name:"price_at_purchase"})
   priceAtPurchase: number;
 }

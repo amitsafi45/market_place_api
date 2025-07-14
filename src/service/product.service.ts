@@ -4,7 +4,7 @@ import { UserEntity } from "@/entity/user.entity";
 import { buildPaginationMeta } from "@/utils/paginate";
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { EntityManager, QueryRunner, Repository } from "typeorm";
 
 @Injectable()
 export class ProductService{
@@ -63,13 +63,18 @@ return {
 
    
   }
-   async findProductByID(id:string){
-     return await this.productRepository.findOne({where:{
-      id:id
-     },select:{
+   async findProductByID(id:string,queryRunner: QueryRunner){
+    
+   return await queryRunner.manager.findOne(ProductEntity,{
+      where:{
+        id:id
+      },
+    select:{
       id:true,
       price:true,
       stock:true
-     }})
+     }
+    })
+    
    }
 }

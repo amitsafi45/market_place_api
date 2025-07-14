@@ -12,7 +12,7 @@ export class OrderItemEntity extends BaseEntity{
 
   @ManyToOne(() => ProductEntity, (product) => product.orderItems, { onDelete: 'CASCADE' })
   @JoinColumn({name:'product_id'})
-  product: ProductEntity;
+  product: ProductEntity | string;
 
   @Column('int')
   quantity: number;

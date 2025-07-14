@@ -63,5 +63,13 @@ return {
 
    
   }
-
+   async findProductByID(id:string){
+     return await this.productRepository.findOne({where:{
+      id:id
+     },select:{
+      id:true,
+      price:true,
+      stock:true
+     }})
+   }
 }

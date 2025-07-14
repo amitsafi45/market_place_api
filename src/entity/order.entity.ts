@@ -9,7 +9,7 @@ export class OrderEntity extends BaseEntity {
 
   @ManyToOne(() => UserEntity, (user) => user.orders)
   @JoinColumn({name:'buyer_id'})
-  buyer: UserEntity;
+  buyer: UserEntity | string;
 
   @OneToMany(() => OrderItemEntity, (item) => item.order, { cascade: true })
   items: OrderItemEntity[];

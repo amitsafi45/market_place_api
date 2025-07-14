@@ -4,7 +4,7 @@ import { Authorization } from "@/middleware/authorization.middleware";
 import { ProductService } from "@/service/product.service";
 import { Role } from "@/utils/role.decorator";
 import { User } from "@/utils/user.decorator";
-import { Controller, Get, Post, Param, Body, UseGuards, HttpStatus, Query } from "@nestjs/common";
+import { Controller, Get, Post, Param, Body, UseGuards, HttpStatus, Query, BadRequestException } from "@nestjs/common";
 
 @Controller('/products')
 export class ProductController {
@@ -14,7 +14,6 @@ export class ProductController {
   async listOfProduct(
     @Query() query: ProductQueryDTO
   ) {
-    console.log(query,"qqqqq")
     const products = await this.productService.findAllProducts(query);
     return {
       success: true,
@@ -34,11 +33,8 @@ export class ProductController {
   async createProduct(@Body()data:CreateProductDTO, @User('sub') userId: string){
         const isProductExist=await this.productService.findProductByNameForSeller(data.name,userId)
          if(isProductExist){
-           return {
-               success:false,
-               statusCode:HttpStatus.BAD_REQUEST,
-               message:"Product already exist"
-           }
+            throw new BadRequestException("Product already exists");
+         
          }
          await this.productService.createProduct(data,userId)
          return{

@@ -135,6 +135,7 @@ The following core requirements from the task have been completed:
 **URL:** `GET /products`  
 **Method:** `GET`  
 **Description:** Fetch a list of products.
+
 **Query Parameters:** Supports filtering and pagination via ProductQuery (e.g., price range, seller ID, page, limit).
 
 #### 🧾 Response 
@@ -171,8 +172,10 @@ The following core requirements from the task have been completed:
 **URL:** `POST /products`  
 **Method:** `POST`  
 **Description:** Allows a Seller to create a new product. 
-**Authorization:** Access restricted to authenticated users with the role Seller.Uses Authentication and Authorization guards along with a custom @Role('Seller') decorator.
-**Body** Accepts product details matching CreateProductDTO.
+
+**Authorization:** Access restricted to authenticated users with the role Seller.
+
+**Body** Accepts product details matching below json format.
 
 #### Request Body
 ```json
@@ -197,6 +200,7 @@ The following core requirements from the task have been completed:
 **URL:** `POST /orders`  
 **Method:** `POST`  
 **Description:** Place an order for one or more products (only accessible to Buyers).
+
 **Authorization:** Requires the user to be logged in with role Buyer.
 Protected with Authentication and Authorization guards.
 

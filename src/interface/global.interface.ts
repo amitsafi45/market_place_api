@@ -22,3 +22,9 @@ export interface PaginationResult<T> {
   meta: PaginationMeta;
   items: T[];
 }
+
+export interface OrderItemCollect{
+        product: string,
+        priceAtPurchase: number,
+        quantity: number
+}

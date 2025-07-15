@@ -1,5 +1,6 @@
 import { CreateOrderDTO } from "@/dto/order.dto";
 import { OrderItemEntity } from "@/entity/orderItem.entity";
+import { OrderItemCollect } from "@/interface/global.interface";
 import { Authentication } from "@/middleware/authentication.middleware";
 import { Authorization } from "@/middleware/authorization.middleware";
 import { OrderService } from "@/service/order.service";
@@ -26,11 +27,7 @@ export class OrderController {
 
     try {
 
-      const orderItemCollect: {
-        product: string,
-        priceAtPurchase: number,
-        quantity: number
-      }[] = [];
+      const orderItemCollect:OrderItemCollect[] = [];
       let total = 0
       for (const item of data.items) {
         const product = await this.productService.findProductByID(item.productId, queryRunner);

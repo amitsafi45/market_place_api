@@ -10,7 +10,7 @@ import {
 } from 'class-validator';
 
 export class UserRegisterDTO {
-  @IsNotEmpty({ message: 'Name is required'})
+  @IsNotEmpty({ message: 'Name is required' })
   @IsString()
   @Length(2, 150, { message: 'Name must be between 2 and 150 characters' })
   name: string;
@@ -29,7 +29,6 @@ export class UserRegisterDTO {
     },
     { message: 'Password is too weak' },
   )
-
   @IsNotEmpty({ message: 'Password is required' })
   password: string;
 

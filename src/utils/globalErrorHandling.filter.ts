@@ -15,7 +15,6 @@ export class GlobalErrorHandlingFilter implements ExceptionFilter {
   catch(exception: unknown, host: ArgumentsHost): void {
     const { httpAdapter } = this.httpAdapterHost;
     const ctx = host.switchToHttp();
-    const request = ctx.getRequest<Request>();
     const response = ctx.getResponse<Response>();
 
     let httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;

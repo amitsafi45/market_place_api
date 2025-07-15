@@ -1,4 +1,4 @@
-import { UserRole } from "@/constant/enum";
+import { UserRole } from '@/constant/enum';
 
 export interface IJwtPayload {
   sub: string;
@@ -23,10 +23,10 @@ export interface IPaginationResult<T> {
   items: T[];
 }
 
-export interface IOrderItemCollect{
-        product: string,
-        priceAtPurchase: number,
-        quantity: number
+export interface IOrderItemCollect {
+  product: string;
+  priceAtPurchase: number;
+  quantity: number;
 }
 
 export type RawSQL = string & { __type: 'RawSQL' };

@@ -14,8 +14,7 @@ import { OrderModule } from './module/order.module';
 
 import { JwtModule } from '@nestjs/jwt';
 @Module({
-  imports: [ 
-    
+  imports: [
     ConfigModule.forRoot({
       envFilePath: '.env',
       ignoreEnvFile: false,
@@ -24,7 +23,7 @@ import { JwtModule } from '@nestjs/jwt';
     }),
     JwtModule.registerAsync({
       imports: [ConfigModule],
-      useFactory: async (config: ConfigService) => ({
+      useFactory: (config: ConfigService) => ({
         secret: config.get('JWT_SECRET'),
         signOptions: {
           expiresIn: config.get('JWT_EXPIRES_IN'),
@@ -32,31 +31,35 @@ import { JwtModule } from '@nestjs/jwt';
       }),
       inject: [ConfigService],
     }),
-  
+
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: typeOrmConfig,
       inject: [ConfigService],
-      }),
-     ThrottlerModule.forRootAsync({
+    }),
+    ThrottlerModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (config: ConfigService) => [
         {
           ttl: parseInt(config.get('THROTTLE_TTL', '3600')),
-         limit: parseInt(config.get('THROTTLE_LIMIT', '100')),
+          limit: parseInt(config.get('THROTTLE_LIMIT', '100')),
         },
       ],
     }),
-     UserModule,
+    UserModule,
     ProductModule,
     OrderModule,
   ],
   controllers: [AppController],
-  providers: [JwtModule,AppService, {
-  provide: APP_GUARD,
-  useClass: ThrottlerGuard
-},],
+  providers: [
+    JwtModule,
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },
+  ],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {

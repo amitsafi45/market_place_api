@@ -13,7 +13,9 @@ import {
 export class CreateProductDTO {
   @IsString()
   @IsNotEmpty()
-  @Length(2, 150, { message: 'Product name must be between 2 and 150 characters' })
+  @Length(2, 150, {
+    message: 'Product name must be between 2 and 150 characters',
+  })
   name: string;
 
   @IsNumber({}, { message: 'Price must be a number' })
@@ -30,11 +32,6 @@ export class CreateProductDTO {
   description: string;
 }
 
-
-
-
-
-
 export class ProductQueryDTO {
   @IsNotEmpty()
   @IsNumberString({}, { message: 'Page must be a number string' })
@@ -44,19 +41,25 @@ export class ProductQueryDTO {
   @IsNumberString({}, { message: 'Limit must be a number string' })
   limit: string;
 
-  @Transform(({ value }) => (value === '' || value === 'undefined' ? undefined : value))
+  @Transform(({ value }) =>
+    value === '' || value === 'undefined' ? undefined : value,
+  )
   @ValidateIf((_, value) => value !== undefined)
   @IsNumberString({}, { message: 'minPrice must be a number string' })
   @IsOptional()
   minPrice?: string;
 
-  @Transform(({ value }) => (value === '' || value === 'undefined' ? undefined : value))
+  @Transform(({ value }) =>
+    value === '' || value === 'undefined' ? undefined : value,
+  )
   @ValidateIf((_, value) => value !== undefined)
   @IsNumberString({}, { message: 'maxPrice must be a number string' })
   @IsOptional()
   maxPrice?: string;
 
-  @Transform(({ value }) => (value === '' || value === 'undefined' ? undefined : value))
+  @Transform(({ value }) =>
+    value === '' || value === 'undefined' ? undefined : value,
+  )
   @ValidateIf((_, value) => value !== undefined)
   @IsUUID('all', { message: 'Invalid sellerId format' })
   @IsOptional()

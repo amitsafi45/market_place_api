@@ -3,9 +3,9 @@ export enum Environment {
   Production = 'Production',
 }
 
-export enum UserRole{
-  'Buyer'= 'Buyer' ,
-  'Seller'='Seller'
+export enum UserRole {
+  'Buyer' = 'Buyer',
+  'Seller' = 'Seller',
 }
 export enum OrderStatus {
   PENDING = 'Pending',

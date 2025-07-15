@@ -14,10 +14,9 @@ export const errorMessageExtract = (errors: ValidationError[]) => {
   return new HttpException(
     {
       success: false,
-      statusCode:HttpStatus.BAD_REQUEST,
+      statusCode: HttpStatus.BAD_REQUEST,
       message: result[0] ?? 'Invalid input',
     },
     HttpStatus.BAD_REQUEST,
   );
-  
 };

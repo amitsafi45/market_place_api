@@ -14,12 +14,12 @@ export class ProductEntity extends BaseEntity {
   @Column('int')
   stock: number;
 
-  @Column({type:'varchar',length:200})
-  description:string
+  @Column({ type: 'varchar', length: 200 })
+  description: string;
 
   @ManyToOne(() => UserEntity, (user) => user.products, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'seller_id' })
-  seller: UserEntity| string;
+  seller: UserEntity | string;
 
   @OneToMany(() => OrderItemEntity, (orderItem) => orderItem.product)
   orderItems: OrderItemEntity[];

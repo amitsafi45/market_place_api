@@ -1,30 +1,67 @@
-
-import { Injectable, CanActivate, ExecutionContext, UnauthorizedException, HttpException, HttpStatus } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { JwtService } from '@nestjs/jwt';
-
+import {
+  CanActivate,
+  ExecutionContext,
+  HttpException,
+  HttpStatus,
+  Injectable,
+} from '@nestjs/common';
 import { Observable } from 'rxjs';
+import { JwtService } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
+import { Request } from 'express';
+import { IJwtPayload } from '@/interface/global.interface';
 
 @Injectable()
 export class Authentication implements CanActivate {
-constructor(private readonly jwtService:JwtService,private readonly configService: ConfigService,
-){}
+  constructor(
+    private readonly jwtService: JwtService,
+    private readonly configService: ConfigService,
+  ) {}
+
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
-    try{
-     const request = context.switchToHttp().getRequest();
-     const token=request.headers?.authorization?.split(' ')[1];
-     if(!token){
-      throw new HttpException({success:false,statusCode:HttpStatus.UNAUTHORIZED,message:"Token missing"},HttpStatus.UNAUTHORIZED)
-     }
-     request.user= this.jwtService.verify(token,{
-      secret: this.configService.get('JWT_SECRET'),
-     })
-   return true
-    }catch(error){
-      throw new HttpException({success:false,statusCode:HttpStatus.UNAUTHORIZED,message:error.message},HttpStatus.UNAUTHORIZED)
+    try {
+      const request = context.switchToHttp().getRequest();
 
+      const authHeader = request.headers?.authorization;
+
+      if (
+        !authHeader ||
+        typeof authHeader !== 'string' ||
+        !authHeader.startsWith('Bearer ')
+      ) {
+        throw new HttpException(
+          {
+            success: false,
+            statusCode: HttpStatus.UNAUTHORIZED,
+            message: 'Invalid or missing Authorization header',
+          },
+          HttpStatus.UNAUTHORIZED,
+        );
+      }
+
+      const token = authHeader.split(' ')[1];
+
+      const decoded = this.jwtService.verify<IJwtPayload>(token, {
+        secret: this.configService.get<string>('JWT_SECRET'),
+      });
+
+      request.user = decoded;
+
+      return true;
+    } catch (error) {
+      throw new HttpException(
+        {
+          success: false,
+          statusCode: HttpStatus.UNAUTHORIZED,
+          message:
+            error?.name === 'JsonWebTokenError'
+              ? 'Invalid token'
+              : error?.message || 'Authentication failed',
+        },
+        HttpStatus.UNAUTHORIZED,
+      );
     }
   }
 }

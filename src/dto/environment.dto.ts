@@ -5,7 +5,6 @@ import {
   IsString,
   Max,
   Min,
-  Matches,
   Length,
 } from 'class-validator';
 import { Environment } from '@/constant/enum';
@@ -19,7 +18,7 @@ export class EnvironmentVariablesDTO {
   @IsNotEmpty()
   @IsString()
   @Length(32, 256) // Assuming secret keys have a minimum length of 32 characters
-  JWT_SECRET:string
+  JWT_SECRET: string;
 
   @IsNotEmpty()
   @IsEnum(Environment)

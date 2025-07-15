@@ -1,9 +1,15 @@
-import { LoginDTO, UserRegisterDTO } from "@/dto/user.dto";
-import { UserService } from "@/service/user.service";
+import { LoginDTO, UserRegisterDTO } from '@/dto/user.dto';
+import { UserService } from '@/service/user.service';
 import * as bcrypt from 'bcrypt';
-import { Controller, Get, Post, Param, Body, HttpStatus, BadRequestException } from "@nestjs/common";
-import { JwtService } from "@nestjs/jwt";
-import { ConfigService } from "@nestjs/config";
+import {
+  Controller,
+  Post,
+  Body,
+  HttpStatus,
+  BadRequestException,
+} from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
 
 @Controller('/users')
 export class UserController {
@@ -11,32 +17,28 @@ export class UserController {
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
-
-  ) { }
+  ) {}
   @Post('/register')
   async register(@Body() data: UserRegisterDTO) {
-    const checkIsUserExist = await this.userService.getUserByEmail(data.email)
+    const checkIsUserExist = await this.userService.getUserByEmail(data.email);
     if (checkIsUserExist) {
-      throw new BadRequestException("Account with this email already exists.");
-
+      throw new BadRequestException('Account with this email already exists.');
     }
     data.password = await bcrypt.hash(data.password, 10);
-    await this.userService.createUser(data)
+    await this.userService.createUser(data);
     return {
       success: true,
       statusCode: HttpStatus.CREATED,
-      message: "Account created Successfully",
-    }
+      message: 'Account created Successfully',
+    };
   }
 
   @Post('/login')
   async login(@Body() data: LoginDTO) {
     const checkIsUserExist = await this.userService.getUserByEmail(data.email);
 
-
     if (!checkIsUserExist) {
-      throw new BadRequestException('Invalid Email Or Password')
-
+      throw new BadRequestException('Invalid Email Or Password');
     }
 
     const isPasswordMatch = await bcrypt.compare(
@@ -45,8 +47,7 @@ export class UserController {
     );
 
     if (!isPasswordMatch) {
-      throw new BadRequestException('Invalid Email Or Password')
-
+      throw new BadRequestException('Invalid Email Or Password');
     }
 
     // Generate JWT Token
@@ -59,7 +60,7 @@ export class UserController {
     const accessToken = await this.jwtService.signAsync(payload, {
       secret: this.configService.get('JWT_SECRET'),
       expiresIn: this.configService.get('JWT_EXPIRES_IN'),
-    },);
+    });
 
     return {
       success: true,
@@ -76,5 +77,4 @@ export class UserController {
       },
     };
   }
-
 }

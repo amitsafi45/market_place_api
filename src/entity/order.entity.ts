@@ -1,14 +1,13 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from "typeorm";
-import { BaseEntity } from "./base.entity";
-import { UserEntity } from "./user.entity";
-import { OrderItemEntity } from "./orderItem.entity";
-import { OrderStatus } from "@/constant/enum";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
+import { BaseEntity } from './base.entity';
+import { UserEntity } from './user.entity';
+import { OrderItemEntity } from './orderItem.entity';
+import { OrderStatus } from '@/constant/enum';
 
 @Entity('order')
 export class OrderEntity extends BaseEntity {
-
   @ManyToOne(() => UserEntity, (user) => user.orders)
-  @JoinColumn({name:'buyer_id'})
+  @JoinColumn({ name: 'buyer_id' })
   buyer: UserEntity | string;
 
   @OneToMany(() => OrderItemEntity, (item) => item.order, { cascade: true })
@@ -17,11 +16,10 @@ export class OrderEntity extends BaseEntity {
   @Column('decimal')
   totalPrice: number;
 
-   @Column({
+  @Column({
     type: 'enum',
     enum: OrderStatus,
     default: OrderStatus.PENDING,
   })
   status: OrderStatus;
-
 }

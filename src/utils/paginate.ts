@@ -1,5 +1,8 @@
-
-export function buildPaginationMeta(total: number, page: number, limit: number) {
+export function buildPaginationMeta(
+  total: number,
+  page: number,
+  limit: number,
+) {
   const totalPages = Math.ceil(total / limit);
   const currentPage = page;
   const nextPage = page < totalPages ? page + 1 : null;

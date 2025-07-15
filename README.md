@@ -90,7 +90,7 @@ The following core requirements from the task have been completed:
   "name": "John Doe",
   "email": "john@example.com",
   "password": "StrongPassword123",
-  "role": "Buyer" --->otional(default ->Seller)
+  "role": "Buyer" --->otional(default ->Buyer)
 }
 ```
 #### 🧾 Response

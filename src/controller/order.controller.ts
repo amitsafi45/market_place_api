@@ -71,10 +71,7 @@ export class OrderController {
         stockUpdateCaseQuery.push(
           `WHEN id = '${item.productId}' THEN ${Math.max(product.stock - item.quantity, 0)}`,
         );
-        // updateStockList.push({
-        //   id:item.productId,
-        //   stock:
-        // })
+      
         total += product.price * item.quantity;
       }
 
@@ -83,7 +80,6 @@ export class OrderController {
         total,
         queryRunner,
       );
-      // const ids = orderItemCollect.map(item => `'${item.product}'`).join(',');
 
       orderItemCollect.map((element) => {
         element['order'] = saveOrder.identifiers[0].id;
@@ -93,9 +89,6 @@ export class OrderController {
         queryRunner,
         orderItemCollect as [OrderItemEntity],
       );
-      // const cases = orderItemCollect
-      //   .map(item => `WHEN id = '${item.product}' THEN ${item.quantity}`)
-      //   .join(' ');
       const sql = `
         UPDATE product
         SET stock = CASE ${stockUpdateCaseQuery} ELSE stock END
@@ -114,9 +107,5 @@ export class OrderController {
     }
   }
 
-  @Get('/')
-  async orderList() {}
-
-  @Get('/:orderId')
-  async orderDetail(@Param('orderId') orderId: string) {}
+ 
 }

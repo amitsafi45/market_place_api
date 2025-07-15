@@ -168,6 +168,31 @@ The following core requirements from the task have been completed:
     }
 }
 ```
+**URL:** `POST /products`  
+**Method:** `POST`  
+**Description:**  Allows a Seller to create a new product.
+**Authorization:** Access restricted to authenticated users with the role Seller.Uses Authentication and Authorization guards along with a custom @Role('Seller') decorator.
+**Body** Accepts product details matching CreateProductDTO.
+
+#### Request Body
+```json
+{
+  "name": "Product Name",
+  "description": "Product Description",
+  "price": 100,
+  "stock": 50
+}
+
+```
+#### Response 
+```json
+{
+  "success": true,
+  "statusCode": 201,
+  "message": "Product created successfully"
+}
+```
+
 #### 🛒 Order API
 **URL:** `POST /orders`  
 **Method:** `POST`  

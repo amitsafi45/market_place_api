@@ -1,0 +1,57 @@
+services:
+  app-dev:
+    container_name: nestjs-app-dev
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      PORT: 3000
+      THROTTLE_TTL: 3600
+      THROTTLE_LIMIT: 100
+      ENVIRONMENT: Development
+
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      DB_DATABASE: postgres
+      DB_SYNCHRONIZE: 'false'
+
+      JWT_SECRET: 9f2a0e7e2c9e3c2dbcb9f2ef8b1d0a1bfc9c7c87f43b2c1e8d6b7a9d3c8e4f1bdf6c5a9b8e3d7f2a1c3e9d7f6b1c4d2
+      JWT_EXPIRES_IN: 1h
+
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/app
+      - /app/node_modules
+    depends_on:
+      - db
+    profiles:
+      - dev
+
+  db:
+    image: postgres:17-alpine
+    container_name: nestjs-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: nestjs-pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - '5050:80'
+    depends_on:
+      - db
+
+volumes:
+  db-data:

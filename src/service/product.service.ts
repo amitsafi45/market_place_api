@@ -77,4 +77,14 @@ export class ProductService {
   async updateStock(queryRunner: QueryRunner, stockUpdateSQLAuery: RawSQL) {
     await queryRunner.manager.query(stockUpdateSQLAuery);
   }
+
+  async getSellerProducts(sellerId: string) {
+    return await this.productRepository.find({
+      where: {
+        seller: {
+          id: sellerId,
+        },
+      },
+    });
+  }
 }

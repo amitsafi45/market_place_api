@@ -52,4 +52,18 @@ export class ProductController {
       message: 'Product created successfully',
     };
   }
+  @Get('/seller-product-list')
+  @Role('Seller')
+  @UseGuards(Authentication, Authorization)
+  async productOfSeller(
+    @User('sub') userId: string,
+  ) {
+     const data=await this.productService.getSellerProducts(userId)
+     return {
+      success: true,
+      statusCode: HttpStatus.ACCEPTED,
+      message: 'Product Fetched successfully',
+      data:data
+    };
+  }
 }

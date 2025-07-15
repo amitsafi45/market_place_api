@@ -135,6 +135,7 @@ The following core requirements from the task have been completed:
 **URL:** `GET /products`  
 **Method:** `GET`  
 **Description:** Fetch a list of products.
+
 **Query Parameters:** Supports filtering and pagination via ProductQuery (e.g., price range, seller ID, page, limit).
 
 #### 🧾 Response 
@@ -171,8 +172,10 @@ The following core requirements from the task have been completed:
 **URL:** `POST /products`  
 **Method:** `POST`  
 **Description:** Allows a Seller to create a new product. 
-**Authorization:** Access restricted to authenticated users with the role Seller.Uses Authentication and Authorization guards along with a custom @Role('Seller') decorator.
-**Body** Accepts product details matching CreateProductDTO.
+
+**Authorization:** Access restricted to authenticated users with the role Seller.
+
+**Body** Accepts product details matching below json format.
 
 #### Request Body
 ```json
@@ -192,11 +195,39 @@ The following core requirements from the task have been completed:
   "message": "Product created successfully"
 }
 ```
+**URL:** `GET /products/seller-product-list`  
+**Method:** `GET`  
+**Description:**  Allows a Seller to retrieve the list of products they have created (i.e., their own products only). 
+
+**Authorization:** Access is restricted to authenticated users with the role Seller.
+Requires JWT token in the Authorization header.
+```
+#### Response 
+```json
+{
+  "success": true,
+  "statusCode": 202,
+  "message": "Product Fetched successfully",
+  "data": [
+    {
+      "id": "a1b2c3d4",
+      "name": "Sample Product",
+      "price": 100,
+      "stock": 10,
+      "sellerId": "uuid-of-seller",
+      "createdAt": "2025-07-15T10:00:00.000Z"
+    },
+    ...
+  ]
+}
+
+```
 
 #### 🛒 Order API
 **URL:** `POST /orders`  
 **Method:** `POST`  
 **Description:** Place an order for one or more products (only accessible to Buyers).
+
 **Authorization:** Requires the user to be logged in with role Buyer.
 Protected with Authentication and Authorization guards.
 

@@ -137,7 +137,7 @@ The following core requirements from the task have been completed:
 **Description:** Fetch a list of products.
 **Query Parameters:** Supports filtering and pagination via ProductQuery (e.g., price range, seller ID, page, limit).
 
-#### 🧾 Response Body
+#### 🧾 Response 
 
 ```json
 {
@@ -167,5 +167,30 @@ The following core requirements from the task have been completed:
         ]
     }
 }
+```
+#### 🛒 Order API
+**URL:** `POST /orders`  
+**Method:** `POST`  
+**Description:** Place an order for one or more products (only accessible to Buyers).
+**Query Parameters:** Requires the user to be logged in with role Buyer.
+Protected with Authentication and Authorization guards.
+
+#### Request Body
+```json
+{
+  "items":[{
+    "productId":"1e3673f2-01f6-453d-ace5-27f0f48dc42b"--->product id,
+    "quantity":3
+    
+  }]
+}
+```
+#### Response 
+```json
+{
+"success": true,
+"statusCode":201,
+"message": "Order Placed Successfully",
+};
 ```
 

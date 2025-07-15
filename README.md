@@ -71,5 +71,64 @@ The following core requirements from the task have been completed:
   - URL
   - Timestamp
   - Status code
+## 📘 API Documentation
+
+### 🔐 Authentication Routes
+
+---
+
+### ➕ Register a User
+
+**URL:** `/users/register`  
+**Method:** `POST`  
+**Description:** Registers a new user with `Buyer` or `Seller` role.
+
+#### 🧾 Request Body
+
+```json
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "password": "StrongPassword123",
+  "role": "Buyer" --->otional(default ->Seller)
+}
+```
+#### 🧾 Response
+```json
+{
+    "success": true,
+    "statusCode": 201,
+    "message": "Account created Successfully"
+}
+```
+### 🔑 Login User
+**URL:** `/users/login`  
+**Method:** `POST`  
+**Description:** Authenticates a user and returns a JWT token.
+
+#### 🧾 Request Body
+
+```json
+{
+  "email": "john@example.com",
+  "password": "StrongPassword123"
+}
+```
+### 🧾 Response
+```json
+{
+    "success": true,
+    "statusCode": 202,
+    "message": "Login Successfully",
+    "data": {
+        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzMWJkZjA4Ni1iZjU1LTQwNjUtYjI1Zi05YmMzZmMyZDVkNjAiLCJyb2xlIjoiU2VsbGVyIiwiZW1haWwiOiJhbWl0MjAyMjNAZ21haWwuY29tIiwiaWF0IjoxNzUyNDMyNDg4LCJleHAiOjE3NTI0MzYwODh9.HWY--pERNtespRapqNBhMuLrLvrlsYIMJz2p_ildnJI",
+        "user": {
+            "id": "31bdf086-bf55-4065-b25f-9bc3fc2d5d60",
+            "email": "amit20223@gmail.com",
+            "role": "Seller"
+        }
+    }
+}
+```
 
 

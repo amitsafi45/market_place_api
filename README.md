@@ -170,7 +170,7 @@ The following core requirements from the task have been completed:
 ```
 **URL:** `POST /products`  
 **Method:** `POST`  
-**Description:**  Allows a Seller to create a new product.
+**Description:** Allows a Seller to create a new product. 
 **Authorization:** Access restricted to authenticated users with the role Seller.Uses Authentication and Authorization guards along with a custom @Role('Seller') decorator.
 **Body** Accepts product details matching CreateProductDTO.
 

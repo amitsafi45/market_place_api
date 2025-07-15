@@ -197,7 +197,7 @@ The following core requirements from the task have been completed:
 **URL:** `POST /orders`  
 **Method:** `POST`  
 **Description:** Place an order for one or more products (only accessible to Buyers).
-**Query Parameters:** Requires the user to be logged in with role Buyer.
+**Authorization:** Requires the user to be logged in with role Buyer.
 Protected with Authentication and Authorization guards.
 
 #### Request Body

@@ -1,6 +1,6 @@
 import { CreateOrderDTO } from "@/dto/order.dto";
 import { OrderItemEntity } from "@/entity/orderItem.entity";
-import { OrderItemCollect } from "@/interface/global.interface";
+import { IOrderItemCollect, RawSQL } from "@/interface/global.interface";
 import { Authentication } from "@/middleware/authentication.middleware";
 import { Authorization } from "@/middleware/authorization.middleware";
 import { OrderService } from "@/service/order.service";
@@ -27,7 +27,9 @@ export class OrderController {
 
     try {
 
-      const orderItemCollect:OrderItemCollect[] = [];
+      const orderItemCollect:IOrderItemCollect[] = [];
+      const productIDCollect:string[]=[]
+      const stockUpdateCaseQuery:string[]=[]
       let total = 0
       for (const item of data.items) {
         const product = await this.productService.findProductByID(item.productId, queryRunner);
@@ -47,16 +49,36 @@ export class OrderController {
           priceAtPurchase: product.price,
           quantity: item.quantity,
         });
+        productIDCollect.push(`'${item.productId}'`)
+        stockUpdateCaseQuery.push(
+          `WHEN id = '${item.productId}' THEN ${Math.max(product.stock - item.quantity,0)}`
+        )
+        // updateStockList.push({
+        //   id:item.productId,
+        //   stock:
+        // })
         total += product.price * item.quantity
 
 
       }
+
       const saveOrder = await this.orderService.createOrder(buyerId, total, queryRunner)
+      // const ids = orderItemCollect.map(item => `'${item.product}'`).join(',');
+      
       orderItemCollect.map((element) => {
         element['order'] = saveOrder.identifiers[0].id
         return element
       })
       await this.orderItemService.createOrderItem(queryRunner, orderItemCollect as [OrderItemEntity])
+      // const cases = orderItemCollect
+      //   .map(item => `WHEN id = '${item.product}' THEN ${item.quantity}`)
+      //   .join(' ');
+      const sql = `
+        UPDATE product
+        SET stock = CASE ${stockUpdateCaseQuery} ELSE stock END
+        WHERE id IN (${productIDCollect});
+      `;
+      await this.productService.updateStock(queryRunner,sql as RawSQL)
       await queryRunner.commitTransaction();
       return {
         success:true,

@@ -1,6 +1,7 @@
 import { CreateProductDTO, ProductQueryDTO } from "@/dto/product.dto";
 import { ProductEntity } from "@/entity/product.entity";
 import { UserEntity } from "@/entity/user.entity";
+import { RawSQL } from "@/interface/global.interface";
 import { buildPaginationMeta } from "@/utils/paginate";
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
@@ -76,5 +77,10 @@ return {
      }
     })
     
+
+   }
+   async updateStock(queryRunner:QueryRunner,stockUpdateSQLAuery:RawSQL){
+
+       return  await queryRunner.manager.query(stockUpdateSQLAuery)
    }
 }

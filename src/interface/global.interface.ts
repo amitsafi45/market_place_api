@@ -1,12 +1,12 @@
 import { UserRole } from "@/constant/enum";
 
-export interface JwtPayload {
+export interface IJwtPayload {
   sub: string;
   email: string;
   role: UserRole;
 }
 
-export interface PaginationMeta {
+export interface IPaginationMeta {
   total: number;
   totalPages: number;
   currentPage: number;
@@ -15,16 +15,18 @@ export interface PaginationMeta {
   limit: number;
 }
 
-export interface PaginationResult<T> {
+export interface IPaginationResult<T> {
   success: boolean;
   statusCode: number;
   message: string;
-  meta: PaginationMeta;
+  meta: IPaginationMeta;
   items: T[];
 }
 
-export interface OrderItemCollect{
+export interface IOrderItemCollect{
         product: string,
         priceAtPurchase: number,
         quantity: number
 }
+
+export type RawSQL = string & { __type: 'RawSQL' };

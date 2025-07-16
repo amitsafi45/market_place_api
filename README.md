@@ -5,6 +5,16 @@
 To quickly start the Simple Marketplace API, run this command from your project root:
 
 ```bash
+# Clone the repository
+git clone <your-repo-url>
+
+# Navigate into the project directory
+cd market-place-api
+
+# Checkout the main branch
+git checkout main
+
+# Start the development environment
 docker-compose --profile dev up 
 ```
 After it’s running, access the API at: http://localhost:3000/market-place/api/v1

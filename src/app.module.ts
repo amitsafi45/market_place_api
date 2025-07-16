@@ -12,7 +12,7 @@ import { UserModule } from './module/user.module';
 import { ProductModule } from './module/product.module';
 import { OrderModule } from './module/order.module';
 
-import { JwtModule } from '@nestjs/jwt';
+import { JwtModule, JwtService,  } from '@nestjs/jwt';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -53,7 +53,6 @@ import { JwtModule } from '@nestjs/jwt';
   ],
   controllers: [AppController],
   providers: [
-    JwtModule,
     AppService,
     {
       provide: APP_GUARD,
